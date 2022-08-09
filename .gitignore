@@ -1,0 +1,5 @@
+#Emacs save file
+*~
+#Python virtual environment
+/venv/*
+
