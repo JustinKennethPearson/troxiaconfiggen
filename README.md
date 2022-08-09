@@ -9,15 +9,38 @@ really, but made public so it is easy to clone.
 # Instructions and notes on how to use the Python stuff.
 
 
-1. Create a virtual environment,activate it and build everything that
-   you need.
+1. Do it by hand Create a virtual environment,activate it and build
+   everything that you need.
 
 ```
 python3 -m venv venv
 source venv/bin/activate
 python -m pip install --upgrade pip
 pip install -r requirements.txt 
+pyinstaller --onefile experiments.py 
 ```
+
+2. Or use the Makefile
+```
+make standalone
+```
+In the build directory you should find a standalone executable.
+
+
+## How to use the package 
+Either run experiments.py in a virtual environment or the standalone
+executable. 
+
+### Create the config file for the max file.
+Note that it skips when there is no soundfile or no orbitfile
+```
+../dist/experiments create SPREADSHEET SOUNDDIR ORBITDIR MAXINPUTS
+``` 
+### Check what sound or orbit files are missing
+```
+../dist/experiments check SPREADSHEET SOUNDDIR ORBITDIR
+```
+
 
 
 
@@ -25,6 +48,7 @@ pip install -r requirements.txt
 
 1. The launch date is a day from day 0.
 2. The delaunch column is the day the satellite goes down.
+
 
 ## Stuff for Justin
 Use the package emacs package `pyvenv` You need to active it it
