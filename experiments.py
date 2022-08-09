@@ -275,12 +275,16 @@ def main_config() :
               +  sys.argv[0]
               + " check spreadsheet sound_dir orb_dir base_config max_inputs")    
 def main() :
-    if sys.argv[1]  == "check" :
-        main_check()
-    if sys.argv[1] == "create" :
-        main_config()
-    if sys.argv[1] == "help" :
-        print("Some useful help information will come.")
+    if (len(sys.argv) == 1) :
+        print("I need some arguments try asking for  help.")
+    else:
+        if sys.argv[1]  == "check" :
+            main_check()
+        if sys.argv[1] == "create" :
+            main_config()
+        if sys.argv[1] == "help" :
+            print("Try: " + sys.argv[0] + " check")
+            print("Try: " + sys.argv[0] + " create")                                    
     
     
 if __name__ == '__main__':
