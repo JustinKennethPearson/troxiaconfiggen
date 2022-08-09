@@ -2,5 +2,11 @@
 *~
 #Python virtual environment
 /venv/*
+#pyinstaller stuff
+/build
+/dist
+#I don't think that I'll have cause to edit experiments.spec
+/experiments.spec
+
 
 
