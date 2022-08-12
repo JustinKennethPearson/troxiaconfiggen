@@ -55,8 +55,9 @@ def make_dict(df) :
     # df is a panda data from
     sat_dict = {}
     for index , row  in df.iterrows() :
-        l = int(row['Launch'])
-        d = int(row['Delaunch'])
+        #Starrt at 0 rather than -1
+        l = int(row['Launch']) - 1
+        d = int(row['Delaunch']) -1 
         info = {'Launch':l , 'Delaunch':d}
         sat_dict[row['SNDNAME']] =  info        
     return(sat_dict) 
