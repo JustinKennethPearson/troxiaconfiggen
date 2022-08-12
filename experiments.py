@@ -29,7 +29,8 @@ def convert_to_csv(write_csv=True,
     # Project down on the columns we need.
     new_df = df[['Unnamed: 0' , 'Unnamed: 4','Unnamed: 30', 'Unnamed: 31']]
     # If there is an X or Kepler we keep it.
-    keep =  new_df[(new_df['Unnamed: 0'] == "X") |  (new_df['Unnamed: 0'] == "Kepler")  ]
+    #    keep =  new_df[(new_df['Unnamed: 0'] == "X") |  (new_df['Unnamed: 0'] == "Kepler")  ]
+    keep =  new_df[(new_df['Unnamed: 0'] == "X")]
     keep = keep[['Unnamed: 4','Unnamed: 30', 'Unnamed: 31']]
     # Now we want to rename the columns
     keep = keep.rename(columns={'Unnamed: 4': 'SNDNAME' , 'Unnamed: 30' : 'Launch' ,
@@ -147,19 +148,19 @@ def create_profile_for_plotting(day_profile) :
 
 # Get rid of this soon.
 
-def create_config() :
-    csv_df   = read_csv()
-    sat_dict = make_dict(csv_df)
-    sat_dict = check_exists(sat_dict, "/Users/justin/Dropbox/MaxMSP/G/NotReady/Sounds/" , "/Users/justin/Dropbox/MaxMSP/G/NotRead/Orbits")
-    day_profile = make_day_profile(sat_dict)
-    print("Done preprocessing.")
-    # Hard wireded. Change later.
-    start_day = 1
-    end_day = 200
-    max_spat_inputs = 2
-    next_free_spat_input = 0
-    return(create_config_internal(sat_dict,day_profile,
-                                  start_day,end_day,max_spat_inputs))
+#def create_config() :
+#    csv_df   = read_csv()
+#    sat_dict = make_dict(csv_df)
+#    sat_dict = check_exists(sat_dict, "/Users/justin/Dropbox/MaxMSP/G/NotReady/Sounds/" , "/Users/justin/Dropbox/MaxMSP/G/NotRead/Orbits")
+#    day_profile = make_day_profile(sat_dict)
+#    print("Done preprocessing.")
+#    # Hard wireded. Change later.
+#    start_day = 1
+#    end_day = 200
+#    max_spat_inputs = 2
+#    next_free_spat_input = 0
+#    return(create_config_internal(sat_dict,day_profile,
+#                                  start_day,end_day,max_spat_inputs))
 
 
 def create_config_internal(sat_dict,day_profile,
@@ -245,7 +246,7 @@ def main_check() :
         sat_dict = make_dict(df)
         check_exists(sat_dict , sound_file_dir , orbit_file_dir)
     else :
-        print("Not enough arguments : "
+        print("Not enough (or too many) arguments : "
               + sys.argv[0] + " check spreadsheet sound_dir orb_dir ")    
 
 def main_config() :
@@ -272,7 +273,7 @@ def main_config() :
                           sound_file_dir , orbit_file_dir,
                           config_base_name)        
     else :
-        print("Not enough arguments : "
+        print("Not enough (or too many) arguments : "
               +  sys.argv[0]
               + " check spreadsheet sound_dir orb_dir base_config max_inputs")    
 def main() :
