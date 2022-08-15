@@ -229,7 +229,7 @@ def write_config_file(dict_list , snd_file_dir , orb_file_dir,config_base) :
         print("Current file name = " , config_name)
         config_dict["snd_file_path"] = snd_file_dir
         config_dict["orb_file_path"] = orb_file_dir
-        json_object = json.dumps(config_dict, indent = 2)
+        json_object = json.dumps(config_dict, indent = None )
         with open(config_name , 'w') as f :
             f.write(json_object)
 
@@ -244,7 +244,8 @@ def main_check() :
         orbit_file_dir   = sys.argv[4]
         df = convert_to_csv(False, spreadsheet_file)
         sat_dict = make_dict(df)
-        check_exists(sat_dict , sound_file_dir , orbit_file_dir)
+        check_exists(sat_dict , sound_file_dir , orbit_file_dir);
+        print("After checking what is avaible there are " , len(sat_dict) , "satellites");
     else :
         print("Not enough (or too many) arguments : "
               + sys.argv[0] + " check spreadsheet sound_dir orb_dir ")    
@@ -262,6 +263,7 @@ def main_config() :
         sat_dict = make_dict(df)
         sat_dict = check_exists(sat_dict , sound_file_dir ,
                                 orbit_file_dir , False)
+        print("After checking what is avaible there are " , len(sat_dict) , "satellites");
         max_number_days = max_days(sat_dict)
         print("Maximum number of days = " , max_number_days)
         day_profile = make_day_profile(sat_dict)
