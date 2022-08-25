@@ -143,24 +143,6 @@ def create_profile_for_plotting(day_profile) :
     return(plt_profile)
 
 
-# Assumes that the cvs file has been created.
-
-
-# Get rid of this soon.
-
-#def create_config() :
-#    csv_df   = read_csv()
-#    sat_dict = make_dict(csv_df)
-#    sat_dict = check_exists(sat_dict, "/Users/justin/Dropbox/MaxMSP/G/NotReady/Sounds/" , "/Users/justin/Dropbox/MaxMSP/G/NotRead/Orbits")
-#    day_profile = make_day_profile(sat_dict)
-#    print("Done preprocessing.")
-#    # Hard wireded. Change later.
-#    start_day = 1
-#    end_day = 200
-#    max_spat_inputs = 2
-#    next_free_spat_input = 0
-#    return(create_config_internal(sat_dict,day_profile,
-#                                  start_day,end_day,max_spat_inputs))
 
 
 def create_config_internal(sat_dict,day_profile,
@@ -251,33 +233,43 @@ def main_check() :
               + sys.argv[0] + " check spreadsheet sound_dir orb_dir ")    
 
 def main_config() :
-    if (len(sys.argv) == 7) : 
+    if (len(sys.argv) == 7 or len(sys.argv) == 9) : 
         spreadsheet_file = sys.argv[2]
         sound_file_dir   = os.path.abspath(sys.argv[3]) + "/"
         orbit_file_dir   = os.path.abspath(sys.argv[4]) + "/"
-        config_base_name = sys.argv[5]
-        max_max_inputs   = int(sys.argv[6])
         print("Sound file dir = " , sound_file_dir)
         print("Orbit file dir = " , orbit_file_dir)
+        config_base_name = sys.argv[5]
+        max_max_inputs   = int(sys.argv[6])
+        if len(sys.argv) == 9 :
+            start_day = int(sys.argv[7]) - 1
+            max_number_days   = int(sys.argv[7]) - 1
+        else :
+            start_day = 0
+            max_number_days = -1
         df = convert_to_csv(False, spreadsheet_file)
         sat_dict = make_dict(df)
         sat_dict = check_exists(sat_dict , sound_file_dir ,
                                 orbit_file_dir , False)
         print("After checking what is avaible there are " , len(sat_dict) , "satellites");
-        max_number_days = max_days(sat_dict)
+        if max_number_days == -1 : 
+            max_number_days = max_days(sat_dict)
+        print("Start day is " , start_day)
         print("Maximum number of days = " , max_number_days)
         day_profile = make_day_profile(sat_dict)
         dict_list = create_config_internal(sat_dict , day_profile ,
-                                           1 , max_number_days,
+                                           start_day , max_number_days,
                                            max_max_inputs , False)
 
         write_config_file(dict_list ,
                           sound_file_dir , orbit_file_dir,
                           config_base_name)        
     else :
-        print("Not enough (or too many) arguments : "
+        print("Not enough (or too many) arguments : \n "
               +  sys.argv[0]
-              + " check spreadsheet sound_dir orb_dir base_config max_inputs")    
+            + " check spreadsheet sound_dir orb_dir base_config max_inputs")
+        print(sys.argv[0] +
+              " check spreadsheet sound_dir orb_dir base_config max_inputs start_day end_day"); 
 def main() :
     if (len(sys.argv) == 1) :
         print("I need some arguments try asking for  help.")
