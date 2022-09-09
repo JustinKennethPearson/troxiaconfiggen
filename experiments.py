@@ -181,16 +181,20 @@ def config_run_through_days(day_profile_copy ,sat_dict ,
         if day_profile_copy[day] != None :
                 current_day_set = set(day_profile_copy[day])
                 for sat in current_day_set :
-#                    print("day = " , day , "sat = " , sat)
+                 #   print("day = " , day , "sat = " , sat)
                     sat_data = (sat_dict[sat])
+                  #  print("sat_data = " , sat_data)
                     entry = [sat+".txt",sat+".aif",
                              next_free_spat_input , sat_data['Launch'] ,
                              sat_data['Delaunch'] ]
                     spat_script.append(entry)
                     # Now delete the current sat from the rest of the days.
-                    for remove_day in range(day , end_day + 1) :
-                        set_to_remove = day_profile_copy[remove_day]
-                        set_to_remove.discard(sat)
+                    for remove_day in range(day , end_day +1) :
+                        print("day_profile_copy[",remove_day,"]=" ,
+                              day_profile_copy[remove_day] )
+                        if day_profile_copy[remove_day] != None :
+                            set_to_remove = day_profile_copy[remove_day]
+                            set_to_remove.discard(sat)
                     #If we reach the max number of inputs
                     #then rest back to 0 and leave this loop.
                     next_free_spat_input = next_free_spat_input + 1
@@ -267,9 +271,9 @@ def main_config() :
     else :
         print("Not enough (or too many) arguments : \n "
               +  sys.argv[0]
-            + " check spreadsheet sound_dir orb_dir base_config max_inputs")
+            + " create spreadsheet sound_dir orb_dir base_config max_inputs")
         print(sys.argv[0] +
-              " check spreadsheet sound_dir orb_dir base_config max_inputs start_day end_day"); 
+              " create spreadsheet sound_dir orb_dir base_config max_inputs start_day end_day"); 
 def main() :
     if (len(sys.argv) == 1) :
         print("I need some arguments try asking for  help.")
