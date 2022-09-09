@@ -190,8 +190,8 @@ def config_run_through_days(day_profile_copy ,sat_dict ,
                     spat_script.append(entry)
                     # Now delete the current sat from the rest of the days.
                     for remove_day in range(day , end_day +1) :
-                        print("day_profile_copy[",remove_day,"]=" ,
-                              day_profile_copy[remove_day] )
+                    #    print("day_profile_copy[",remove_day,"]=" ,
+                    #          day_profile_copy[remove_day] )
                         if day_profile_copy[remove_day] != None :
                             set_to_remove = day_profile_copy[remove_day]
                             set_to_remove.discard(sat)
