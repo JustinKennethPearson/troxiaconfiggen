@@ -9,7 +9,8 @@
 # have the corresponding file.
 # create_config() generates mutlple lists of thing to schedule
 # when the maximum number of spat inputs is reachered. 
-# This version makes the minimum orbit length 2.
+# This version removes the min number of orbits feature
+# that can be done in the javascript now.
 
 import pandas as pd
 import os.path
@@ -60,8 +61,8 @@ def make_dict(df) :
         l = int(row['Launch']) - 1
         d = int(row['Delaunch']) -1
         #This makes the minimum orbit length 2 days.
-        if (l - d) < 2 :
-            d = l + 2
+#        if (l - d) < 2 :
+ #           d = l + 2
         info = {'Launch':l , 'Delaunch':d}
         sat_dict[row['SNDNAME']] =  info        
     return(sat_dict) 
