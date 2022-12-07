@@ -100,6 +100,7 @@ def check_exists(sat_dict,snd_file_dir,orb_file_dir,verbose=True) :
 
 #Returns the max number of days.
 
+
 def max_days(sat_dict) :
     max_num_days = 0
     for sat  in sat_dict :
@@ -108,6 +109,15 @@ def max_days(sat_dict) :
             max_num_days =  info['Delaunch'] 
     return (max_num_days)
 
+def find_start_day(sat_dict) :
+    start_day = -1;
+    for sat in sat_dict :
+        info = sat_dict[sat]
+        if start_day == -1 :
+            start_day = info['Launch'];
+        if info['Launch'] < start_day :
+            start_day = info['Launch'];
+    return(start_day);
 # Takes a sat_dict and produces an array (list)
 # Thinking about this, I can't think of a snappy fast an efficient
 # algorithm than the inefficient quadaratic one below
@@ -263,6 +273,7 @@ def main_config() :
         if max_number_days == -1 : 
             max_number_days = max_days(sat_dict)
         print("Start day is " , start_day)
+        print("Earliest launch day in the file " , find_start_day(sat_dict) );
         print("Maximum number of days = " , max_number_days)
         day_profile = make_day_profile(sat_dict)
         dict_list = create_config_internal(sat_dict , day_profile ,
