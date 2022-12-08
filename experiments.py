@@ -147,6 +147,9 @@ def max_number_in_orbit(day_profile) :
     return max_in_orbit
 
 
+## This is only really useful if you are running in interactive mode
+## and you want to see what is going on.
+
 def create_profile_for_plotting(day_profile) :
     plt_profile = []
     for i in day_profile :
@@ -197,10 +200,22 @@ def config_run_through_days(day_profile_copy ,sat_dict ,
                 for sat in current_day_set :
                  #   print("day = " , day , "sat = " , sat)
                     sat_data = (sat_dict[sat])
-                  #  print("sat_data = " , sat_data)
+                 #   print("sat_data = " , sat_data)
+                    # First adjust the Delaunch day
+                    # if it is longer than the end day then set it to that.
+                    if end_day < sat_data['Delaunch'] :
+                        sat_data['Delaunch'] = delaunch_day = end_day
+                    else:
+                        delaunch_day = sat_data['Delaunch'] 
+                    # Next shift everything by the start day
+                    # Note that the start day in the spreadsheet
+                    # and the parameters to the code are 1 based.
+                    # but the it is adjusted before we get here.
+                    launch_day = sat_data['Launch'] - start_day
+                    delaunch_day = sat_data['Delaunch'] - start_day 
                     entry = [sat+".txt",sat+".aif",
-                             next_free_spat_input , sat_data['Launch'] ,
-                             sat_data['Delaunch'] ]
+                             next_free_spat_input , launch_day ,
+                             delaunch_day ]
                     spat_script.append(entry)
                     # Now delete the current sat from the rest of the days.
                     for remove_day in range(day , end_day +1) :
@@ -261,7 +276,7 @@ def main_config() :
         max_max_inputs   = int(sys.argv[6])
         if len(sys.argv) == 9 :
             start_day = int(sys.argv[7]) - 1
-            max_number_days   = int(sys.argv[7]) - 1
+            max_number_days   = int(sys.argv[8]) - 1
         else :
             start_day = 0
             max_number_days = -1
@@ -269,9 +284,16 @@ def main_config() :
         sat_dict = make_dict(df)
         sat_dict = check_exists(sat_dict , sound_file_dir ,
                                 orbit_file_dir , False)
-        print("After checking what is avaible there are " , len(sat_dict) , "satellites");
+        print("After checking what is avaible there are "
+              , len(sat_dict) , "satellites");
         if max_number_days == -1 : 
             max_number_days = max_days(sat_dict)
+        # Check if the sheet starts after the start day.
+        if start_day < find_start_day(sat_dict) :
+            print("Adjusting the start day.\n");
+            start_day = find_start_day(sat_dict)
+        print("start_day = " , start_day);
+        print("end_day = " , max_number_days);
         print("Start day is " , start_day)
         print("Earliest launch day in the file " , find_start_day(sat_dict) );
         print("Maximum number of days = " , max_number_days)
