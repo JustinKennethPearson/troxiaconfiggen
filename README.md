@@ -34,13 +34,25 @@ executable.
 ### Create the config file for the max file.
 Note that it skips when there is no soundfile or no orbitfile
 ```
-../dist/experiments create SPREADSHEET SOUNDDIR ORBITDIR MAXINPUTS
+../dist/experiments create SPREADSHEET SOUNDDIR ORBITDIR base_config_name MAXINPUTS
 ``` 
 ### Check what sound or orbit files are missing
 ```
 ../dist/experiments check SPREADSHEET SOUNDDIR ORBITDIR
 ```
 
+### Create the config file for the max file with optional start day
+Note that it skips when there is no soundfile or no orbitfile
+```
+../dist/experiments create SPREADSHEET SOUNDDIR ORBITDIR base_config
+MAXINPUTS start_day 
+``` 
+### Create the config file for the max file with optional start/end day
+Note that it skips when there is no soundfile or no orbitfile
+```
+../dist/experiments create SPREADSHEET SOUNDDIR ORBITDIR base_config
+MAXINPUTS start_day end_day
+``` 
 
 
 
